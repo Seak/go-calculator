@@ -14,7 +14,7 @@
 
 ```bash
 go get github.com/shopspring/decimal
-go get github.com/yourusername/calculator
+go get github.com/seak/go-calculator
 ```
 
 ## 快速开始
