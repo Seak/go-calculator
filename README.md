@@ -24,7 +24,7 @@ package main
 import (
   "fmt"
   "github.com/shopspring/decimal"
-  "github.com/yourusername/calculator"
+  "github.com/seak/go-calculator"
 )
 
 func main() {
