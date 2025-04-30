@@ -72,8 +72,8 @@ if syntaxErr, ok := err.(*calculator.SyntaxError); ok {
 }
 ```
 
-# 示例场景
-## 财务计算
+## 示例场景
+### 财务计算
 ```bash
 // 含税金额计算
 expr, _ := calculator.Compile("price * (1 + tax_rate)")
@@ -83,7 +83,7 @@ result, _ := expr.Evaluate(map[string]decimal.Decimal{
 })
 ```
 
-## 科学公式
+### 科学公式
 ```bash
 // 动能公式 (1/2 mv²)
 expr, _ := calculator.Compile("0.5 * m * v^2")
