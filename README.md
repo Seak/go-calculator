@@ -15,6 +15,7 @@
 ```bash
 go get github.com/shopspring/decimal
 go get github.com/yourusername/calculator
+```
 
 ## 快速开始
 ```bash
@@ -44,6 +45,7 @@ func main() {
   res, _ := expr.Evaluate(vars)
   fmt.Println(res) // 2.10
 }
+```
 
 ## 配置选项
 |方法|说明|示例|
@@ -56,6 +58,7 @@ expr, _ := calculator.Compile("(a + b)^10",
   calculator.WithFinalPrecision(2),
   calculator.WithIntermediatePrecision(8),
 )
+```
 
 ## 错误处理
 ```bash
@@ -67,6 +70,7 @@ if errors.Is(err, calculator.ErrDivisionByZero) {
 if syntaxErr, ok := err.(*calculator.SyntaxError); ok {
   fmt.Printf("语法错误位置 %d: %s", syntaxErr.Position, syntaxErr.Message)
 }
+```
 
 # 示例场景
 ## 财务计算
@@ -77,6 +81,7 @@ result, _ := expr.Evaluate(map[string]decimal.Decimal{
   "price":    decimal.NewFromInt(2999),
   "tax_rate": decimal.NewFromFloat(0.08),
 })
+```
 
 ## 科学公式
 ```bash
@@ -86,3 +91,4 @@ res, _ := expr.Evaluate(map[string]decimal.Decimal{
   "m": decimal.NewFromFloat(2.5),
   "v": decimal.NewFromFloat(10),
 }) // 125
+```
