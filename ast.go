@@ -31,6 +31,11 @@ type unaryNode struct {
 	expr node
 }
 
+type functionNode struct {
+	name string
+	args []node
+}
+
 func (n *numberNode) eval(_ map[string]decimal.Decimal, _ options) (decimal.Decimal, error) {
 	return n.value, nil
 }
@@ -82,6 +87,29 @@ func (n *binaryNode) eval(vars map[string]decimal.Decimal, opts options) (decima
 		return decimal.Zero, fmt.Errorf("unknown operator")
 	}
 
+	if opts.intermediatePrecision >= 0 {
+		result = result.Round(opts.intermediatePrecision)
+	}
+	return result, nil
+}
+
+func (n *functionNode) eval(vars map[string]decimal.Decimal, opts options) (decimal.Decimal, error) {
+	fn, exists := getFunction(n.name)
+	if !exists {
+		return decimal.Zero, fmt.Errorf("unknown function '%s'", n.name)
+	}
+	args := make([]decimal.Decimal, len(n.args))
+	for i, arg := range n.args {
+		val, err := arg.eval(vars, opts)
+		if err != nil {
+			return decimal.Zero, err
+		}
+		args[i] = val
+	}
+	result, err := fn(args...)
+	if err != nil {
+		return decimal.Zero, err
+	}
 	if opts.intermediatePrecision >= 0 {
 		result = result.Round(opts.intermediatePrecision)
 	}

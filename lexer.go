@@ -92,6 +92,9 @@ func (l *lexer) nextToken() (token, error) {
 	case ')':
 		l.pos++
 		return token{typ: tokenRightParen, pos: startPos}, nil
+	case ',':
+        l.pos++
+        return token{typ: tokenComma, pos: startPos}, nil
 	default:
 		return token{}, fmt.Errorf("invalid character '%c' at position %d", ch, startPos)
 	}

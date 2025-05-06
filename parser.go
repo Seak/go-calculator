@@ -124,6 +124,9 @@ func (p *parser) parseFactor() (node, error) {
 		if err := p.eat(tokenIdent); err != nil {
 			return nil, err
 		}
+		if p.currentToken.typ == tokenLeftParen {
+			return p.parseFunctionCall(name)
+		}
 		return &variableNode{name: name}, nil
 	case tokenLeftParen:
 		if err := p.eat(tokenLeftParen); err != nil {
@@ -140,4 +143,28 @@ func (p *parser) parseFactor() (node, error) {
 	default:
 		return nil, fmt.Errorf("unexpected token at position %d", p.currentToken.pos)
 	}
+}
+
+func (p *parser) parseFunctionCall(name string) (node, error) {
+	if err := p.eat(tokenLeftParen); err != nil {
+		return nil, err
+	}
+	var args []node
+	if p.currentToken.typ != tokenRightParen {
+		for {
+			arg, err := p.parseExpression()
+			if err != nil {
+				return nil, err
+			}
+			args = append(args, arg)
+			if p.currentToken.typ != tokenComma {
+				break
+			}
+			p.eat(tokenComma)
+		}
+	}
+	if err := p.eat(tokenRightParen); err != nil {
+		return nil, fmt.Errorf("missing closing parenthesis for function '%s'", name)
+	}
+	return &functionNode{name: name, args: args}, nil
 }

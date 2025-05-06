@@ -14,6 +14,7 @@ const (
 	tokenLeftParen
 	tokenRightParen
 	tokenIdent
+	tokenComma
 	tokenEOF
 )
 

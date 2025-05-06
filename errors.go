@@ -8,6 +8,7 @@ var (
 	ErrDivisionByZero    = fmt.Errorf("division by zero")
 	ErrUndefinedVariable = fmt.Errorf("undefined variable")
 	ErrInvalidExpression = fmt.Errorf("invalid expression")
+	ErrUnknownFunction = fmt.Errorf("unknown function")
 )
 
 // SyntaxError 表示表达式语法错误
